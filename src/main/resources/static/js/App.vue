@@ -15,7 +15,7 @@
                 <a href="/login">Google</a>
             </v-container>
             <v-container v-if="profile">
-                <messages-list :messages="messages" />
+                <messages-list/>
             </v-container>
             <router-view></router-view>
         </v-content>
@@ -28,18 +28,14 @@
 </template>
 
 <script>
-    import MessagesList from './MessageList.vue'
+    import MessagesList from './pages/MessageList.vue'
+    import {mapState} from 'vuex'
 
     export default {
         components: {
             MessagesList
         },
-        data() {
-            return {
-                messages: frontendData.messages,
-                profile: frontendData.profile
-            }
-        }
+        computed: mapState(['profile']),
     }
 </script>
 
