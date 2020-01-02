@@ -3,7 +3,8 @@
         <message-form :messageAttr="message"/>
         <message-row v-for="message in sortedMessages"
                      :key="message.id"
-                     :message="message"/>
+                     :message="message"
+                     :editMessage="editMessage" />
     </v-layout>
 </template>
 
@@ -22,9 +23,13 @@
                 message: null
             }
         },
-        computed: mapGetters (['sortedMessages']),
+        computed: mapGetters ([
+            'sortedMessages'
+        ]),
         methods: {
-
+            editMessage(message) {
+                this.message = message
+            }
         }
     }
 </script>

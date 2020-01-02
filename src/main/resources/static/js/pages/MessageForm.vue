@@ -12,18 +12,10 @@
 </template>
 
 <script>
-    function getIndex(list, id) {
-        for (var i = 0; i < list.length; i++ ) {
-            if (list[i].id === id) {
-                return i
-            }
-        }
-
-        return -1
-    }
+    import { mapActions } from 'vuex'
 
     export default {
-        props: ['messages', 'messageAttr'],
+        props: ['messageAttr'],
         data() {
             return {
                 text: '',
@@ -37,26 +29,21 @@
             }
         },
         methods: {
+            ...mapActions(['addMessageAction', 'updateMessageAction']),
             save() {
-                const message = { text: this.text }
+                const message = {
+                    id: this.id,
+                    text: this.text
+                }
 
                 if (this.id) {
-                    this.$resource('/message{/id}').update({id: this.id}, message).then(result =>
-                        result.json().then(data => {
-                            const index = getIndex(this.messages, data.id)
-                            this.messages.splice(index, 1, data)
-                            this.text = ''
-                            this.id = ''
-                        })
-                    )
+                    this.updateMessageAction(message)
                 } else {
-                    this.$resource('/message{/id}').save({}, message).then(result =>
-                        result.json().then(data => {
-                            this.messages.push(data)
-                            this.text = ''
-                        })
-                    )
+                    this.addMessageAction(message)
                 }
+
+                this.text = ''
+                this.id = ''
             }
         }
     }

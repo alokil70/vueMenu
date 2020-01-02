@@ -40,11 +40,11 @@ module.exports = {
                     {
                         loader: 'sass-loader',
                         // Requires sass-loader@^7.0.0
-                        options: {
+                        /*options: {
                             implementation: require('sass'),
                             fiber: require('fibers'),
                             indentedSyntax: true // optional
-                        },
+                        },*/
                         // Requires sass-loader@^8.0.0
                         options: {
                             implementation: require('sass'),
@@ -68,4 +68,4 @@ module.exports = {
             path.join(__dirname, 'node_modules'),
         ],
     }
-}
+};
