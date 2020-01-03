@@ -3,6 +3,7 @@
         <v-card-text primary-title>
             <i>({{ message.id }})</i>
             {{ message.text }}
+            {{ message.text1 }}
         </v-card-text>
         <v-card-actions>
             <v-btn value="Edit" @click="edit" small text rounded>Edit</v-btn>
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import {mapActions} from 'vuex'
 
     export default {
         props: ['message', 'editMessage'],

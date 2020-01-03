@@ -1,14 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from 'views/Login.vue'
+import MessagesList from 'pages/MessageList.vue'
+import Profile from 'views/Profile.vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes = [
-    {
-        path: '/login',
-        component: Login
-    }/*,
+    {path: '/', component: MessagesList},
+    {path: '/login', component: Login},
+    {path: '/profile', component: Profile},
+
+
+
+
+
+    {path: '*', component: MessagesList}/*,
     {
         path: '/register',
         name: 'register',
@@ -61,8 +68,8 @@ const routes = [
 
 export default new VueRouter({
     mode: 'history',
-/*
-    base: process.env.BASE_URL,
-*/
+    /*
+        base: process.env.BASE_URL,
+    */
     routes
 })

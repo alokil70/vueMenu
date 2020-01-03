@@ -14,6 +14,8 @@ public class Food {
     private Long id;
     @JsonView(Views.IdName.class)
     private String text;
+    @JsonView(Views.IdName.class)
+    private String text1;
 
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -34,6 +36,14 @@ public class Food {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getText1() {
+        return text1;
+    }
+
+    public void setText1(String text1) {
+        this.text1 = text1;
     }
 
     public LocalDateTime getCreationDate() {

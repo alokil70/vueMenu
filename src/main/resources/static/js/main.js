@@ -8,9 +8,9 @@ import router from 'router/index'
 
 
 new Vue({
+  store,
 //  el: '#app',
   router,
-  store,
   vuetify,
     render: h => h(App)
 }).$mount('#app');

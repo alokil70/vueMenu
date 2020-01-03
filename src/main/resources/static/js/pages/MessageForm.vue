@@ -5,6 +5,11 @@
                 placeholder="Write something"
                 v-model="text"
         />
+        <v-text-field
+                label="New message1"
+                placeholder="Write something1"
+                v-model="text1"
+        />
         <v-btn @click="save">
             Save
         </v-btn>
@@ -12,19 +17,20 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import {mapActions} from 'vuex'
 
     export default {
         props: ['messageAttr'],
         data() {
             return {
                 text: '',
+                text1: '',
                 id: ''
             }
         },
         watch: {
             messageAttr(newVal, oldVal) {
-                this.text = newVal.text
+                this.text = newVal.text;
                 this.id = newVal.id
             }
         },
@@ -33,8 +39,9 @@
             save() {
                 const message = {
                     id: this.id,
-                    text: this.text
-                }
+                    text: this.text,
+                    text1: this.text1
+                };
 
                 if (this.id) {
                     this.updateMessageAction(message)
@@ -42,7 +49,8 @@
                     this.addMessageAction(message)
                 }
 
-                this.text = ''
+                this.text = '';
+                this.text1 = '';
                 this.id = ''
             }
         }

@@ -24,7 +24,7 @@ public class MessageController {
         this.foodRepo = foodRepo;
     }
 
-/*    @GetMapping
+    @GetMapping
     @JsonView(Views.IdName.class)
     public List<Food> list() {
         return foodRepo.findAll();
@@ -34,7 +34,7 @@ public class MessageController {
     @JsonView(Views.FullMessage.class)
     public Food getOne(@PathVariable("id") Food food) {
         return food;
-    }*/
+    }
 
     @PostMapping
     public Food create(@RequestBody Food food) {
