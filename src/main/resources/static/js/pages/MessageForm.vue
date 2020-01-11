@@ -9,6 +9,7 @@
                 label="New message1"
                 placeholder="Write something1"
                 v-model="text1"
+                @keyup.enter="save"
         />
         <v-btn @click="save">
             Save
