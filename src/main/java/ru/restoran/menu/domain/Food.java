@@ -16,6 +16,8 @@ public class Food {
     private String text;
     @JsonView(Views.IdName.class)
     private String text1;
+    @JsonView(Views.IdName.class)
+    private String imageName;
 
     @Column(updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -52,5 +54,13 @@ public class Food {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }

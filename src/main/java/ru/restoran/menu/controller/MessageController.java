@@ -2,27 +2,28 @@ package ru.restoran.menu.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.restoran.menu.domain.Food;
 import ru.restoran.menu.domain.Views;
 import ru.restoran.menu.repos.FoodRepo;
 
-import javax.persistence.Access;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("message")
 public class MessageController {
 
     private final FoodRepo foodRepo;
-    private String UPLOAD_PATH = "upload";
+    @Value("${upload.path}")
+    private String UPLOAD_PATH;
 
     public MessageController(FoodRepo foodRepo) {
         this.foodRepo = foodRepo;
@@ -42,48 +43,59 @@ public class MessageController {
 
     @PostMapping
     public Food create(@RequestBody Food food) {
+
         food.setCreationDate(LocalDateTime.now());
         return foodRepo.save(food);
     }
 
-
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String fileUpload(@RequestParam("image") MultipartFile file) {
 
-        File convertFile = new File(UPLOAD_PATH + file.getOriginalFilename());
-        try {
-            convertFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (file != null) {
+            File uploadDir = new File(UPLOAD_PATH);
 
-        try (FileOutputStream outputStream = new FileOutputStream(convertFile)) {
-            outputStream.write(file.getBytes());
-        } catch (Exception exe) {
-            exe.printStackTrace();
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+
+            FileOutputStream outputStream;
+
+            try {
+                outputStream = new FileOutputStream(uploadDir + "/" + resultFileName);
+                outputStream.write(file.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return resultFileName;
         }
-        return "File has uploaded successfully";
+        return null;
     }
+
 
 
 
 
 /*    @PostMapping("/file")
-    public String uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-        String fileName = file.getOriginalFilename();
-        String path = request.getServletContext().getRealPath("") + UPLOAD_PATH
-                + File.separator + fileName;
+    public String uploadFile(@RequestParam("image") MultipartFile file, HttpServletRequest request) {
+        try {
+            String fileName = file.getOriginalFilename();
+            String path = request.getServletContext().getRealPath("")
+                    + UPLOAD_PATH + File.separator + fileName;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 
-    private void saveFile(InputStream inputStream, String path){
+    private void saveFile(InputStream inputStream, String path) {
         try {
             OutputStream stream = new FileOutputStream(new File(path));
 
-        } catch (Exception e){
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }*/
-
 
     @PutMapping("{id}")
     public Food update(
