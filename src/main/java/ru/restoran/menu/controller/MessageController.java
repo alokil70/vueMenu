@@ -76,6 +76,13 @@ public class MessageController {
 
 
 
+/*    @ResponseBody
+    @RequestMapping(value = "/image-resource", method = RequestMethod.GET)
+    public Resource getImageAsResource() {
+        ServletContext servletContext = null;
+        return new ServletContextResource(servletContext., "/WEB-INF/images/image-example.jpg");
+    }*/
+
 
 /*    @PostMapping("/file")
     public String uploadFile(@RequestParam("image") MultipartFile file, HttpServletRequest request) {
