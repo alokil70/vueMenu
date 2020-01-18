@@ -22,6 +22,7 @@ import java.util.UUID;
 public class MessageController {
 
     private final FoodRepo foodRepo;
+
     @Value("${upload.path}")
     private String UPLOAD_PATH;
 
@@ -43,7 +44,6 @@ public class MessageController {
 
     @PostMapping
     public Food create(@RequestBody Food food) {
-
         food.setCreationDate(LocalDateTime.now());
         return foodRepo.save(food);
     }
