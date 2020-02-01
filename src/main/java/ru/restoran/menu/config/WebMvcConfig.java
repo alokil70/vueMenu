@@ -7,10 +7,7 @@ import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerF
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 @EnableWebMvc
@@ -26,8 +23,25 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+    }
+
+    @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/message/**").allowedOrigins("*").allowedMethods(
+                "GET", "POST", "OPTIONS", "PUT", "DELETE")
+                .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers")
+                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+                .allowCredentials(true).maxAge(3600);
+        registry.addMapping("/message/upload/**").allowedOrigins("*").allowedMethods(
+                "GET", "POST", "OPTIONS", "PUT", "DELETE")
+                .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers")
+                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+                .allowCredentials(true).maxAge(3600);
+        registry.addMapping("/product/**").allowedOrigins("*").allowedMethods(
                 "GET", "POST", "OPTIONS", "PUT", "DELETE")
                 .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
                         "Access-Control-Request-Headers")
@@ -39,6 +53,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**")
                 .addResourceLocations("file://" + uploadPath + "/");
-
     }
 }
